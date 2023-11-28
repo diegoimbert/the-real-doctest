@@ -1,0 +1,9 @@
+{
+  "name": "the-real-doctest",
+  "version": "1.0.0",
+  "description": "Run TSDoc examples",
+  "main": "index.js",
+  "repository": "https://gitlab.com/kanso-team/the-real-doctest",
+  "author": "Diego Imbert",
+  "license": "MIT"
+}
