@@ -4,7 +4,7 @@ const baseURL = pathToFileURL(`${process.cwd()}/`).href;
 
 const extensionsRegex = /\.(html|css|png|webp|jpg|svg)$/;
 
-export function resolve(specifier, context, next) {
+export function resolve(specifier: string, context: any, next: any) {
   const { parentURL = baseURL } = context;
   if (extensionsRegex.test(specifier)) {
     return {
@@ -16,7 +16,7 @@ export function resolve(specifier, context, next) {
   return next(specifier, context);
 }
 
-export function load(url, context, next) {
+export function load(url: string, context: any, next: any) {
   if (extensionsRegex.test(url)) {
     return {
       format: "module",

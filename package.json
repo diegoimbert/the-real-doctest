@@ -1,6 +1,6 @@
 {
   "name": "the-real-doctest",
-  "version": "1.0.3",
+  "version": "0.0.1",
   "description": "Run TSDoc examples",
   "repository": "https://gitlab.com/kanso-team/the-real-doctest",
   "author": "Diego Imbert <diegoimbert@pm.me>",
@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "tsc -p ./",
-    "pub": "yarn build && yarn publish"
+    "pub": "yarn build && yarn publish",
+    "local": "rsync -av --progress . node_modules/the-real-doctest --exclude node_modules"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
