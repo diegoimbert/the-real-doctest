@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { parseDoctests } from '../doctest-processing/parseDoctests';
-import { transformDoctests } from '../doctest-processing/transformDoctests';
+import { transform } from '../doctest-processing/transformer/node-test';
 
 const extensionsRegex = /\.(js|ts|mjs|cjs|mts|cts|jsx|tsx)$/;
 
@@ -9,9 +9,11 @@ export async function load(url: string, context: any, next: any) {
     return next(url, context)
   const content = (await readFile(new URL(url))).toString()
   const doctests = parseDoctests({ content, path: url })
-  const source = transformDoctests({
-    src: { content, path: url },
-    doctests
-  })
+  const doctestMap = "{\n" + doctests.map(d => {
+    return ` ${d.lineNumber}: () => { ${transform(d)} },\n`
+  }) + "}"
+  const source = `${content}\nconst __doctests__ = ${doctestMap}`
+  console.log(source)
+
   return { ...await next(url, context), source }
 }
