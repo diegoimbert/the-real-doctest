@@ -8,13 +8,13 @@
   "license": "MIT",
   "dependencies": {
     "tsc": "^2.0.4",
-    "tsx": "^4.6.0",
     "typescript": "^5.2.2"
   },
   "exports": {
     "./package.json": "./package.json",
     "./ignore-imports": "./dist/loaders/ignore-imports.js",
-    "./doctest": "./dist/loaders/doctest.js"
+    "./doctest": "./dist/loaders/doctest.js",
+    ".": "./dist/loaders/index.js"
   },
   "scripts": {
     "build": "tsc -p ./",
