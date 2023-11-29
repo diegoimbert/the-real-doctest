@@ -2,7 +2,7 @@ import { URL, pathToFileURL } from 'node:url';
 
 const baseURL = pathToFileURL(`${process.cwd()}/`).href;
 
-const extensionsRegex = /\.(html|css|png|webp|jpg|svg)$/;
+const extensionsRegex = /\.(html|css|scss|sass|png|webp|jpg|svg)$/;
 
 export function resolve(specifier: string, context: any, next: any) {
   const { parentURL = baseURL } = context;
