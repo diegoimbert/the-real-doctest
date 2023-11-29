@@ -1,8 +1,27 @@
 {
   "name": "the-real-doctest",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Run TSDoc examples",
   "repository": "https://gitlab.com/kanso-team/the-real-doctest",
-  "author": "Diego Imbert",
-  "license": "MIT"
+  "author": "Diego Imbert <diegoimbert@pm.me>",
+  "publisher": "kanso",
+  "license": "MIT",
+  "dependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^5.2.2"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./ignore-imports": "./dist/loaders/ignore-imports.mjs"
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "pub": "yarn build && yarn publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.26.0"
+  }
 }
