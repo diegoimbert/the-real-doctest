@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { array, command, multioption, number, oneOf, option, positional, run, string } from 'cmd-ts';
 import { File } from 'cmd-ts/batteries/fs';
 import { readFile } from 'node:fs/promises';
@@ -35,7 +37,7 @@ const args = {
 const cli = command({
   name: 'The Real Doctest',
   description: 'Execute TSDoc examples',
-  version: '0.0.1',
+  version: '0.0.2',
   args,
   async handler({ lines, path, outputFormat, runCommand }) {
     const doctestTempPath = generateTempPath(path, '.doctest.tmp')
