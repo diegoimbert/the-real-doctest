@@ -37,7 +37,7 @@ const args = {
 const cli = command({
   name: 'The Real Doctest',
   description: 'Execute TSDoc examples',
-  version: '0.0.3',
+  version: '0.0.4',
   args,
   async handler({ lines, path, outputFormat, runCommand }) {
     const doctestTempPath = generateTempPath(path, '.doctest.tmp')
