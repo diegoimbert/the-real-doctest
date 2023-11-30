@@ -21,6 +21,8 @@ export async function withTempFile({ path, content, fn }: {
 }
 
 /**
+ * Generates a temp path while keeping the original extension 
+ * 
  * @example generateTempPath('./lib/util.ts', '.tmp') === './lib/util.tmp.ts' 
  */
 export function generateTempPath(path: string, tempExtention: string): string {
