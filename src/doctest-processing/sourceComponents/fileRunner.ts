@@ -8,7 +8,7 @@ export function transformFileWithDoctests({ path, content, filter }: {
   let doctests = parseDoctests({ content, path })
   if (filter) doctests = doctests.filter(filter)
   const doctestMap = createDoctestMap(doctests)
-  const contentWithDoctests = appendDoctests({ path, content, doctestMap })
+  const contentWithDoctests = appendDoctests({ content, doctestMap })
   return contentWithDoctests
 }
 
@@ -18,11 +18,11 @@ function createDoctestMap(doctests: Doctest[]): string {
   ) + "]"
 }
 
-function appendDoctests({ path, content, doctestMap }: {
-  path: string, content: string, doctestMap: string
+function appendDoctests({ content, doctestMap }: {
+  content: string, doctestMap: string
 }): string {
   return `${content}\n` +
     `import * as assert from 'node:assert';\n` +
     `const __doctests__ = ${doctestMap};\n` +
-    `${runAllTests(path)};\n`
+    `${runAllTests};\n`
 }
