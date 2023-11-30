@@ -1,4 +1,4 @@
-import { DoctestResult } from "./sourceComponents/doctestRunner"
+import { DOCTEST_RESULT_LOG_ID, DoctestResult } from "./sourceComponents/doctestRunner"
 
 export const doctestOutputFormat = ["raw", "cli"] as const
 export type DoctestOutputFormat = typeof doctestOutputFormat[number]
@@ -6,7 +6,7 @@ export type DoctestOutputFormat = typeof doctestOutputFormat[number]
 export type DoctestFormatter = (resultList: DoctestResult[]) => string
 
 export function getFormatter(type: DoctestOutputFormat): DoctestFormatter {
-  if (type == "raw") return JSON.stringify
+  if (type == "raw") return (d) => DOCTEST_RESULT_LOG_ID + JSON.stringify(d)
   return cliFormatter
 }
 
