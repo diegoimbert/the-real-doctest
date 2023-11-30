@@ -8,6 +8,7 @@
   "license": "MIT",
   "bin": "./dist/index.js",
   "dependencies": {
+    "cmd-ts": "^0.13.0",
     "tsc": "^2.0.4",
     "typescript": "^5.2.2"
   },
