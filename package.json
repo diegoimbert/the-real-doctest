@@ -9,8 +9,6 @@
   "bin": "./dist/index.js",
   "dependencies": {
     "cmd-ts": "^0.13.0",
-    "tsc": "^2.0.4",
-    "tsx": "^4.6.1",
     "typescript": "^5.2.2"
   },
   "exports": {
@@ -28,6 +26,7 @@
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
+    "tsc": "^2.0.4",
     "eslint": "^8.26.0"
   }
 }
