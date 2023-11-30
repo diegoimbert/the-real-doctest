@@ -6,6 +6,7 @@
   "author": "Diego Imbert <diegoimbert@pm.me>",
   "publisher": "kanso",
   "license": "MIT",
+  "bin": "./dist/index.js",
   "dependencies": {
     "tsc": "^2.0.4",
     "typescript": "^5.2.2"

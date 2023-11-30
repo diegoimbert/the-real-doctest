@@ -1,6 +1,13 @@
 import { Doctest } from "../parseDoctests"
 import * as ts from "typescript"
 
+/**
+ * Transforms a doctest into source code using the node:test functions
+ * == and === become respectively assert.equal and assert.strictEqual
+ * 
+ * @param doctest The doctest to transform
+ * @returns Source code for this doctest
+ */
 export function transform(doctest: Doctest): string {
   const originalAst = ts.createSourceFile("", doctest.content, ts.ScriptTarget.ESNext, true)
   const newAst = ts.transform(originalAst, [transformer]).transformed[0]
