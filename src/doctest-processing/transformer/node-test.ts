@@ -41,5 +41,7 @@ const transformer: ts.TransformerFactory<ts.Node> = (context) => {
 const exprTransformMap: ExprTransformMap = {
   [ts.SyntaxKind.EqualsEqualsToken]: { identifier: "assert.equal" },
   [ts.SyntaxKind.EqualsEqualsEqualsToken]: { identifier: "assert.strictEqual" },
+  [ts.SyntaxKind.ExclamationEqualsToken]: { identifier: "assert.notEqual" },
+  [ts.SyntaxKind.ExclamationEqualsEqualsToken]: { identifier: "assert.notStrictEqual" }
 }
 type ExprTransformMap = Record<ts.SyntaxKind | number, { identifier: string }>
