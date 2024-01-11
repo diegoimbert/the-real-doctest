@@ -1,6 +1,6 @@
 {
   "name": "the-real-doctest",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Run TSDoc examples",
   "repository": "https://gitlab.com/kanso-team/the-real-doctest",
   "author": "Diego Imbert <diegoimbert@pm.me>",

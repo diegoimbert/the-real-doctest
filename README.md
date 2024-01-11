@@ -1,7 +1,9 @@
 # The Real Doctest
 
-This library provides commands to execute TSDoc @example tags in Typescript.  
-We also have a VS Code extension that uses this library directly from the IDE.
+This library provides commands to execute TSDoc @example tags in Typescript.
+
+We also have a VS Code extension that uses this library directly from the IDE:  
+`https://marketplace.visualstudio.com/items?itemName=Kanso.the-real-doctest-ts`
 
 ## Usage
 
