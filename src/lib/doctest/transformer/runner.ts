@@ -44,12 +44,6 @@ export default function transformProgram(
       "\n" +
       doctestCodeGenerator.generate({ doctests })
 
-    console.log("SOURCE --------------------")
-    console.log("SOURCE --------------------")
-    console.log("SOURCE --------------------")
-    console.log("SOURCE --------------------")
-    console.log(newSourceString)
-
     const updatedSourceFile = tsInstance.createSourceFile(
       fileName,
       newSourceString,
