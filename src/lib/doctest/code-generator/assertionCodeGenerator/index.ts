@@ -4,12 +4,23 @@
 // https://opensource.org/licenses/MIT
 
 import ts from "typescript"
-import { DoctestCodeGenerator } from "."
-import { Doctest } from "../parser"
+import { DoctestCodeGenerator } from ".."
+import { Doctest } from "../../parser"
+import { rawResultFormatter as resultFormatter } from "./resultFormatter/rawResultFormatter"
 
 export const assertionCodeGenerator: DoctestCodeGenerator = {
   generate({ doctests }) {
-    return doctests.map(transform).join("\n")
+    return doctests
+      .map(doctest => {
+        return `try { ${transform(doctest)}; console.log(${resultFormatter({
+          doctest,
+          result: { type: "success" }
+        })}) } catch (e: any) { console.log({...${resultFormatter({
+          doctest,
+          result: { type: "error", message: "?" }
+        })}, message: e.message }) }`
+      })
+      .join("\n")
   }
 }
 
@@ -58,8 +69,7 @@ const transformer: ts.TransformerFactory<ts.Node> = context => {
           )
           return ts.factory.createCallExpression(assertFn, undefined, [
             node.left,
-            node.right,
-            ts.factory.createStringLiteral("NOPE")
+            node.right
           ])
         }
       }

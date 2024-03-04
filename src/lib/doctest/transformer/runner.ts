@@ -3,6 +3,7 @@
  */
 
 import type * as ts from "typescript"
+import fs from "fs"
 import type { ProgramTransformerExtras, PluginConfig } from "ts-patch"
 import { getPatchedHost, normalizePath } from "../../common/transformer/utils"
 import { parseDoctests } from "../parser"
@@ -33,14 +34,28 @@ export default function transformProgram(
     if (fileName.includes("node_modules")) continue
     const sourceString = printFile(sourceFile)
 
+    const originalSourceString = fs.readFileSync(fileName).toString()
+
+    // We parse the doctests from the parsed AST in order to remove them
+    // from the chain and not process them again
+    const parsedSourceFileDoctests = parseDoctests({
+      path: fileName,
+      content: sourceString
+    })
+    if (!parsedSourceFileDoctests.length) continue
+
+    // We parse the doctests from the original file in order to get
+    // the correct line numbers
     const doctests = parseDoctests({
-      content: sourceString,
+      content: originalSourceString,
       path: fileName
     })
-    if (!doctests.length) continue
 
     const newSourceString =
-      removeDoctestsFromSourceFile({ sourceString, doctests }) +
+      removeDoctestsFromSourceFile({
+        sourceString,
+        doctests: parsedSourceFileDoctests
+      }) +
       "\n" +
       doctestCodeGenerator.generate({ doctests })
 
