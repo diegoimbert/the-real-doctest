@@ -1,6 +1,6 @@
 {
   "name": "the-real-doctest",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Run TSDoc examples",
   "repository": "https://gitlab.com/kanso-team/the-real-doctest",
   "author": "Diego Imbert <diegoimbert@pm.me>",
@@ -8,25 +8,29 @@
   "license": "MIT",
   "bin": "./dist/index.js",
   "dependencies": {
-    "cmd-ts": "^0.13.0",
+    "cmd-ts": "^0.13.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.26.0",
+    "ts-patch": "^3.1.2",
     "typescript": "^5.2.2"
   },
   "exports": {
     "./package.json": "./package.json",
-    "./ignore-imports": "./dist/loaders/ignore-imports.js",
-    "./doctest": "./dist/loaders/doctest.js",
-    ".": "./dist/loaders/index.js"
+    "./transformers/import-remover": "./dist/lib/import/transformer/remover.js",
+    "./transformers/doctest-runner": "./dist/lib/doctest/transformer/runner.js"
   },
   "scripts": {
     "build": "tsc -p ./",
     "pub": "yarn build && yarn publish",
     "local": "yarn build && rsync -av --progress . node_modules/the-real-doctest --exclude node_modules"
   },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "eslint": "^8.26.0",
-    "tsc": "^2.0.4"
+  "tsp": {
+    "tscOptions": {
+      "type": "program",
+      "transformProgram": true
+    }
   }
 }

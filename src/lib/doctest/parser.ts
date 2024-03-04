@@ -1,16 +1,17 @@
 export interface ParseDoctestsParams {
-  content: string,
-  path: string,
+  path: string
+  content: string
 }
 
 /**
- * Returns the examples from a source file containing TSDoc examples
+ * Returns the doctests from a source file
+ *
  * @param content a .ts file content
- * @returns every comment line 
+ * @returns every comment line
  */
 export function parseDoctests(params: ParseDoctestsParams): Doctest[] {
   const content = params.content.toString()
-  const fileLines = content.split('\n')
+  const fileLines = content.split("\n")
   let blocks: Doctest[] = []
 
   let currentDoctestBlock: Doctest | null = null
@@ -20,14 +21,14 @@ export function parseDoctests(params: ParseDoctestsParams): Doctest[] {
       blocks.push(currentDoctestBlock)
     }
     currentDoctestBlock = null
-    state = 'Default'
+    state = "Default"
   }
 
-  let state: 'Default' | 'InDoctest' = 'Default'
+  let state: "Default" | "InDoctest" = "Default"
   for (let i = 0; i < fileLines.length; ++i) {
     const line = fileLines[i]
-    
-    if (state == 'InDoctest') {
+
+    if (state == "InDoctest") {
       if (!currentDoctestBlock) {
         throw new Error("Why is currentDoctestBlock null?")
       }
@@ -41,12 +42,12 @@ export function parseDoctests(params: ParseDoctestsParams): Doctest[] {
           console.warn(`Non-terminated doctest block (line ${i})`)
           saveBlockAndReset()
         } else {
-          currentDoctestBlock.content += '\n' + contentStart[1].trim()
+          currentDoctestBlock.content += "\n" + contentStart[1].trim()
         }
       }
     }
 
-    if (state == 'Default') {
+    if (state == "Default") {
       const doctestStart = /^\s*\*\s*@example(.*)/.exec(line)
       if (doctestStart) {
         // This corresponds to what follows immediately after the @example,
@@ -54,9 +55,9 @@ export function parseDoctests(params: ParseDoctestsParams): Doctest[] {
         currentDoctestBlock = {
           path: params.path,
           lineNumber: i,
-          content: doctestStart[1].trim(),
+          content: doctestStart[1].trim()
         }
-        state = 'InDoctest'
+        state = "InDoctest"
       }
     }
   }
