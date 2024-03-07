@@ -11,7 +11,6 @@ export function getPatchedHost(
 
   return Object.assign(compilerHost, {
     getSourceFile(fileName: string, languageVersion: ts.ScriptTarget) {
-      fileName = normalizePath(fileName)
       if (fileCache.has(fileName)) return fileCache.get(fileName)
 
       const sourceFile = originalGetSourceFile.apply(void 0, Array.from(arguments) as any)
@@ -21,10 +20,6 @@ export function getPatchedHost(
     },
     fileCache
   })
-}
-
-export function normalizePath(path: string) {
-  return path
 }
 
 // For some reason, the getText methods can't read the text field, but we can

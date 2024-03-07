@@ -17,8 +17,9 @@
     "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.26.0",
     "node": "^21.7.0",
+    "ts-node": "^10.9.2",
     "ts-patch": "^3.1.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.2"
   },
   "exports": {
     "./package.json": "./package.json"
@@ -26,12 +27,15 @@
   "scripts": {
     "build": "tsc -p ./ && cp tsconfig.doctest.json ./dist/tsconfig.doctest.json",
     "pub": "yarn build && yarn publish",
-    "local": "yarn build && rsync -av --progress . node_modules/the-real-doctest --exclude node_modules"
+    "local": "yarn build && rsync -av --progress . node_modules/the-real-doctest --exclude node_modules --exclude .git"
   },
   "tsp": {
     "tscOptions": {
       "type": "program",
       "transformProgram": true
     }
+  },
+  "the-real-doctest": {
+    "runCommand": "npx ts-node --project tsconfig.doctest.json --compiler ts-patch/compiler"
   }
 }

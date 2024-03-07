@@ -5,7 +5,7 @@
 import type * as ts from "typescript"
 import fs from "fs"
 import type { ProgramTransformerExtras, PluginConfig } from "ts-patch"
-import { getPatchedHost, normalizePath } from "../../common/transformer/utils"
+import { getPatchedHost } from "../../common/transformer/utils"
 import { parseDoctests } from "../parser"
 import { DoctestCodeGenerator } from "../code-generator"
 import { assertionCodeGenerator } from "../code-generator/assertionCodeGenerator"
@@ -27,9 +27,6 @@ export default function transformProgram(
   const { printFile } = tsInstance.createPrinter()
 
   for (const sourceFile of program.getSourceFiles()) {
-    if (sourceFile.fileName.includes("node_modules")) {
-      continue
-    }
     const { fileName, languageVersion } = sourceFile
     if (fileName.includes("node_modules")) continue
     const sourceString = printFile(sourceFile)
@@ -64,7 +61,8 @@ export default function transformProgram(
       newSourceString,
       languageVersion
     )
-    compilerHost.fileCache.set(fileName, updatedSourceFile)
+
+    compilerHost.fileCache.set(fileName, { ...sourceFile, ...updatedSourceFile })
   }
 
   /* Re-create Program instance */

@@ -6,11 +6,7 @@
 
 import type * as ts from "typescript"
 import type { ProgramTransformerExtras, PluginConfig } from "ts-patch"
-import {
-  getPatchedHost,
-  normalizePath,
-  patchedGetText
-} from "../../common/transformer/utils"
+import { getPatchedHost, patchedGetText } from "../../common/transformer/utils"
 
 const extensionsRegex = /\.(html|css|scss|sass|png|webp|jpg|svg)$/
 
@@ -22,7 +18,7 @@ export default function transformProgram(
 ): ts.Program {
   const compilerOptions = program.getCompilerOptions()
   const compilerHost = getPatchedHost(host, tsInstance, compilerOptions)
-  const rootFileNames = program.getRootFileNames().map(normalizePath)
+  const rootFileNames = program.getRootFileNames()
 
   /* Transform AST */
   const transformedSource = tsInstance.transform(
@@ -37,12 +33,13 @@ export default function transformProgram(
   const { printFile } = tsInstance.createPrinter()
   for (const sourceFile of transformedSource) {
     const { fileName, languageVersion } = sourceFile
+    if (fileName.includes("node_modules")) continue
     const updatedSourceFile = tsInstance.createSourceFile(
       fileName,
       printFile(sourceFile),
       languageVersion
     )
-    compilerHost.fileCache.set(fileName, updatedSourceFile)
+    compilerHost.fileCache.set(fileName, { ...sourceFile, ...updatedSourceFile })
   }
 
   /* Re-create Program instance */
