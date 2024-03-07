@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
-import {} from "cmd-ts"
+import main from "./lib/cli"
+main()
