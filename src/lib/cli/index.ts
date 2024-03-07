@@ -6,6 +6,7 @@
 import { run, subcommands } from "cmd-ts"
 import { installCommand } from "./commands/install"
 import { version } from "../../../package.json"
+import { testCommand } from "./commands/test"
 
 export default function main() {
   run(
@@ -13,7 +14,8 @@ export default function main() {
       name: "The Real Doctest",
       version,
       cmds: {
-        install: installCommand
+        install: installCommand,
+        test: testCommand
       }
     }),
     process.argv.slice(2)

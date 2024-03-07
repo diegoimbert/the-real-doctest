@@ -10,7 +10,7 @@ import cliSelect from "cli-select"
 import { exec } from "node:child_process"
 
 export const installCommand = command({
-  name: "The Real Doctest Installer",
+  name: "Installer",
   description: "Installs the-real-doctest default environment in the current project",
   args: {},
   handler: async args => {

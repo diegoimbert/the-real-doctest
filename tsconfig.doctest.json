@@ -6,11 +6,11 @@
     "jsx": "react-jsx",
     "plugins": [
       {
-        "transform": "./.the-real-doctest/dist/lib/import/transformer/remover.js",
+        "transform": "./.the-real-doctest-tmp/dist/lib/import/transformer/remover.js",
         "transformProgram": true
       },
       {
-        "transform": "./.the-real-doctest/dist/lib/doctest/transformer/runner.js",
+        "transform": "./.the-real-doctest-tmp/dist/lib/doctest/transformer/runner.js",
         "transformProgram": true
       }
     ]
