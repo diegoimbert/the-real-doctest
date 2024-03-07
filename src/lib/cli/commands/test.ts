@@ -21,7 +21,7 @@ export const testCommand = command({
   },
   handler: async args => {
     withLib({
-      forceCopy: true,
+      forceCopy: false,
       handler: async ({ rootPath }) => {
         await new Promise(async (resolve, reject) => {
           const packageJson = JSON.parse(await fs.readFile("./package.json", "utf8"))
@@ -41,6 +41,7 @@ export const testCommand = command({
           }
           const cmd = `${runCmd} ${args.file}`
           exec(cmd, (error, stdout, stderr) => {
+            console.log(stderr)
             const testResults = stdout
               .split("\n")
               .filter(l => l.startsWith(outputPrefix))

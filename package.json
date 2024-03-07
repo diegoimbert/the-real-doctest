@@ -22,7 +22,9 @@
     "typescript": "^5.4.2"
   },
   "exports": {
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./transformers/doctest-runner": "./dist/lib/doctest/transformer/runner.js",
+    "./transformers/import-remover": "./dist/lib/import/transformer/remover.js"
   },
   "scripts": {
     "build": "tsc -p ./ && cp tsconfig.doctest.json ./dist/tsconfig.doctest.json",
