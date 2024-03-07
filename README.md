@@ -2,10 +2,9 @@
 
 This library provides commands to execute TSDoc @example tags in Typescript.
 
-We also have <a href="https://marketplace.visualstudio.com/items?itemName=Kanso.the-real-doctest-ts">a Visual Studio Code extension</a> that uses this library directly from the IDE:  
+We also have <a href="https://marketplace.visualstudio.com/items?itemName=Kanso.the-real-doctest-ts">a Visual Studio Code extension</a> that uses this library directly from the IDE:
 
 ## Usage
-
 
 `npx the-real-doctest src/lib/utils.ts`
 
@@ -29,22 +28,20 @@ function f(x: number) {
 Output:
 
 ```
-Passed tests: 3
-FAILED TESTS: 2
------------------
-Error at line 4: 
-10 != 10
------------------
-Error at line 7: 
-30 == 20
+3 doctests succeeded
+2 doctests failed
+At src/lib/utils.ts:3
+ >> 10 != 10
+At src/lib/utils.ts:6
+ >> 30 == 20
 ```
 
 ## Help
 
 `npx the-real-doctest --help`
 
-
 ## Setup
 
-We use the tsx compiler by default, so you need to install it in your project: `npm i -D the-real-doctest tsx`.
-Alternatively, you can specify a custom run command (run `npx the-real-doctest --help`)
+Install the library with the package manager of your choice
+
+Then, run `npx the-real-doctest install`.
