@@ -8,17 +8,23 @@ import { DoctestCodeGenerator } from ".."
 import { Doctest } from "../../parser"
 import { rawResultFormatter as resultFormatter } from "./resultFormatter/rawResultFormatter"
 
+export const outputPrefix = "DOCTEST >> "
+
 export const assertionCodeGenerator: DoctestCodeGenerator = {
   generate({ doctests }) {
     return doctests
       .map(doctest => {
-        return `try { ${transform(doctest)}; console.log(${resultFormatter({
+        return `try { ${transform(
+          doctest
+        )}; console.log('${outputPrefix}' + JSON.stringify(${resultFormatter({
           doctest,
           result: { type: "success" }
-        })}) } catch (e: any) { console.log({...${resultFormatter({
-          doctest,
-          result: { type: "error", message: "?" }
-        })}, message: e.message }) }`
+        })})) } catch (e: any) { console.log('${outputPrefix}' + JSON.stringify({...${resultFormatter(
+          {
+            doctest,
+            result: { type: "error", message: "?" }
+          }
+        )}, message: e.message })) }`
       })
       .join("\n")
   }

@@ -10,6 +10,8 @@ import fs from "fs/promises"
 import { File } from "cmd-ts/batteries/fs"
 import cliSelect from "cli-select"
 import { installCommand } from "./install"
+import { outputPrefix } from "../../doctest/code-generator/assertionCodeGenerator"
+import { RawResult } from "../../doctest/code-generator/assertionCodeGenerator/resultFormatter/rawResultFormatter"
 
 export const testCommand = command({
   name: "Test",
@@ -39,8 +41,24 @@ export const testCommand = command({
           }
           const cmd = `${runCmd} ${args.file}`
           exec(cmd, (error, stdout, stderr) => {
-            console.log(stdout)
-            console.log(stderr)
+            const testResults = stdout
+              .split("\n")
+              .filter(l => l.startsWith(outputPrefix))
+              .map(l => l.substring(outputPrefix.length))
+              .map(l => JSON.parse(l) as RawResult)
+            const succeeded = testResults.filter(test => test.type == "success")
+            const failed = testResults.filter(test => test.type == "error")
+            if (succeeded.length) {
+              console.log(`${succeeded.length} doctests succeeded`)
+            }
+            if (failed.length) {
+              console.log(`${failed.length} doctests failed`)
+              failed.forEach(test => {
+                if (test.type !== "error") return // Type narrowing doesn't work on that yet?
+                console.log(`At ${test.path}`)
+                console.log(` >> ${test.message}`)
+              })
+            }
             resolve(null)
           })
         })
