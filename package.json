@@ -1,6 +1,6 @@
 {
   "name": "the-real-doctest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run TSDoc examples",
   "repository": "https://gitlab.com/kanso-team/the-real-doctest",
   "author": "Diego Imbert <diegoimbert@pm.me>",
@@ -9,7 +9,8 @@
   "bin": "./dist/index.js",
   "dependencies": {
     "cli-select": "^1.1.2",
-    "cmd-ts": "^0.13.0"
+    "cmd-ts": "^0.13.0",
+    "the-real-doctest": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.25",
