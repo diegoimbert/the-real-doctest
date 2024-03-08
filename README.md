@@ -6,7 +6,7 @@ We also have <a href="https://marketplace.visualstudio.com/items?itemName=Kanso.
 
 ## Usage
 
-`npx the-real-doctest src/lib/utils.ts`
+`npx the-real-doctest test src/lib/utils.ts`
 
 Expression statements with ==, !=, === or !== will be checked for equality
 
@@ -42,6 +42,6 @@ At src/lib/utils.ts:6
 
 ## Setup
 
-Install the library with the package manager of your choice
+Install the library as a dev dependency with the package manager of your choice
 
 Then, run `npx the-real-doctest install`.

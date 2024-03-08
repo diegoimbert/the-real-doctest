@@ -34,7 +34,10 @@ export const testCommand = command({
           return
         }
         await installCommand.handler({})
+        testCommand.handler(args)
+        return
       }
+
       const cmd = `${runCmd} ${args.file}`
       exec(cmd, (error, stdout, stderr) => {
         console.log(stderr)
