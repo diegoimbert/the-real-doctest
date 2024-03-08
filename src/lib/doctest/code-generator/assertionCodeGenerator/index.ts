@@ -12,21 +12,21 @@ export const outputPrefix = "DOCTEST >> "
 
 export const assertionCodeGenerator: DoctestCodeGenerator = {
   generate({ doctests }) {
-    return doctests
-      .map(doctest => {
-        return `try { ${transform(
-          doctest
-        )}; console.log('${outputPrefix}' + JSON.stringify(${resultFormatter({
+    const importStmt = "import __nodeAssert__ from 'node:assert'"
+    const doctestsCode = doctests.map(doctest => {
+      return `try { ${transform(
+        doctest
+      )}; console.log('${outputPrefix}' + JSON.stringify(${resultFormatter({
+        doctest,
+        result: { type: "success" }
+      })})) } catch (e: any) { console.log('${outputPrefix}' + JSON.stringify({...${resultFormatter(
+        {
           doctest,
-          result: { type: "success" }
-        })})) } catch (e: any) { console.log('${outputPrefix}' + JSON.stringify({...${resultFormatter(
-          {
-            doctest,
-            result: { type: "error", message: "?" }
-          }
-        )}, message: e.message })) }`
-      })
-      .join("\n")
+          result: { type: "error", message: "?" }
+        }
+      )}, message: e.message })) }`
+    })
+    return [importStmt, ...doctestsCode].join("\n")
   }
 }
 
@@ -61,14 +61,8 @@ const transformer: ts.TransformerFactory<ts.Node> = context => {
         const exprTransform = exprTransformMap[node.operatorToken.kind]
         if (exprTransform) {
           // We are writing in AST (e.g):
-          //   require("node:assert").strictEqual(left, right)
-          const requireIdentifier = ts.factory.createIdentifier("require")
-          const nodeAssertStrIdentifier = ts.factory.createStringLiteral("node:assert")
-          const assertModule = ts.factory.createCallExpression(
-            requireIdentifier,
-            undefined,
-            [nodeAssertStrIdentifier]
-          )
+          //   __nodeAssert__.strictEqual(left, right)
+          const assertModule = ts.factory.createIdentifier("__nodeAssert__")
           const assertFn = ts.factory.createPropertyAccessExpression(
             assertModule,
             exprTransform.identifier
