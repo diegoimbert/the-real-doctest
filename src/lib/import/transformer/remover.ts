@@ -57,7 +57,8 @@ function transformAst(this: typeof ts, context: ts.TransformationContext) {
     function visit(node: ts.Node): ts.Node {
       if (tsInstance.isImportDeclaration(node)) {
         const name = patchedGetText(node.importClause?.name)
-        const path = patchedGetText(node.moduleSpecifier).slice(1, -1)
+        let path = patchedGetText(node.moduleSpecifier)
+        if (path.endsWith("'") || path.endsWith('"')) path = path.slice(1, -1)
         if (name && extensionsRegex.test(path)) {
           return emptyVariableAsAny(context, tsInstance, name)
         }
