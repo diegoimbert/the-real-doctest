@@ -31,8 +31,8 @@ export const assertionCodeGenerator: DoctestCodeGenerator = {
 }
 
 /**
- * Transforms a doctest into source code using the node:test functions
- * == and === become respectively assert.equal and assert.strictEqual
+ * Transforms a doctest into source code using the node:assert functions
+ * == and === become respectively assert.deepEqual and assert.deepStrictEqual
  *
  * @param doctest The doctest to transform
  * @returns Source code for this doctest
@@ -80,9 +80,9 @@ const transformer: ts.TransformerFactory<ts.Node> = context => {
 }
 
 const exprTransformMap: ExprTransformMap = {
-  [ts.SyntaxKind.EqualsEqualsToken]: { identifier: "equal" },
-  [ts.SyntaxKind.EqualsEqualsEqualsToken]: { identifier: "strictEqual" },
-  [ts.SyntaxKind.ExclamationEqualsToken]: { identifier: "notEqual" },
-  [ts.SyntaxKind.ExclamationEqualsEqualsToken]: { identifier: "notStrictEqual" }
+  [ts.SyntaxKind.EqualsEqualsToken]: { identifier: "deepEqual" },
+  [ts.SyntaxKind.EqualsEqualsEqualsToken]: { identifier: "deepStrictEqual" },
+  [ts.SyntaxKind.ExclamationEqualsToken]: { identifier: "notDeepEqual" },
+  [ts.SyntaxKind.ExclamationEqualsEqualsToken]: { identifier: "notDeepStrictEqual" }
 }
 type ExprTransformMap = Record<ts.SyntaxKind | number, { identifier: string }>
